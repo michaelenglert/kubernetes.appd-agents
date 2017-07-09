@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    tier: monitoring
+    app: appdynamics-agents
+    version: v1
+  name: appd-agents
+spec:
+  template:
+    metadata:
+      name: appd-agents
+      labels:
+        app: appd-agents
+    spec:
+      containers:
+      - name: appd-agents
+        image: appd_agents:latest #Specify the AppDynamics Agent Version
+        volumeMounts:
+#See volume section for additional details
+        - mountPath: /app-agent
+          name: app-agent
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+      volumes:
+#Share the Java App Agent with other Containers by mounting a Host Volume. Can also be done with other types of volumes
+      - name: app-agent
+        hostPath:
+          path: /opt/app-agent
+#Share the Docker Socket to get information of the running Containers (optional)
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
