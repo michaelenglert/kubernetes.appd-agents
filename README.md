@@ -37,7 +37,7 @@ spec:
           - name: APPDYNAMICS_AGENT_TIER_NAME
             value: Tier
           - name: CATALINA_OPTS
-            value: -Dappdynamics.agent.reuse.nodeName.prefix=Tier -Dappdynamics.agent.reuse.nodeName=true -Dappdynamics.force.default.ssl.certificate.validation=false -javaagent:/app-agent/javaagent.jar
+            value: -Dappdynamics.agent.reuse.nodeName.prefix=$APPDYNAMICS_AGENT_TIER -Dappdynamics.agent.reuse.nodeName=true -Dappdynamics.force.default.ssl.certificate.validation=false -javaagent:/app-agent/javaagent.jar
       volumes:
         - name: app-agent
           hostPath:
