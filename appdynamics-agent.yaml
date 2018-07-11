@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: appdynamics-agent
+spec:
+  template:
+    metadata:
+      labels:
+        app: appdynamics-agent
+    spec:
+      containers:
+        - env:
+            - name: APPDYNAMICS_CONTROLLER_HOST_NAME
+              value: "<APPDYNAMICS_CONTROLLER_HOST_NAME>"
+            - name: APPDYNAMICS_CONTROLLER_PORT
+              value: <APPDYNAMICS_CONTROLLER_PORT>
+            - name: APPDYNAMICS_CONTROLLER_SSL_ENABLED
+              value: <true/false>
+            - name: APPDYNAMICS_AGENT_ACCOUNT_NAME
+              value: "<APPDYNAMICS_AGENT_ACCOUNT_NAME>"
+            - name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
+              value: "<APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY>"
+            - name: APPDYNAMICS_SIM_ENABLED
+              value: true
+            - name: APPDYNAMICS_DOCKER_ENABLED
+              value: true
+          image: "michaelenglert/appd-agent:latest"
+          name: appdynamics-agent
+          volumeMounts:
+            - mountPath: /opt/appdynamics/app-agent
+              name: app-agent
+            - mountPath: /var/run/docker.sock
+              name: docker-sock
+            - mountPath: /hostroot
+              name: host-root
+      volumes:
+        - hostPath:
+            path: /
+            type: Directory
+          name: host-root
+        - hostPath:
+            path: /opt/appdynamics/app-agent
+            type: Directory
+          name: app-agent
+        - hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+          name: docker-sock

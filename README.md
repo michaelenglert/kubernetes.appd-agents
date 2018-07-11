@@ -1,7 +1,8 @@
 AppDynamics Agents for Kubernetes
 ======
 # Introduction
-This Kubernetes YAML file deploys AppDynamics Agents as a Daemon Set within your Kubernetes Cluster and lets' you share the Java Agents across your PODs.
+This Kubernetes YAML files deploy the AppDynamics Agent as a Daemon Set within your Kubernetes Cluster. There are different samples provided:
+
 # Deploy
 The DaemonSet relies on the Docker Image found in the [Docker AppDynamics Agents] Repository.
 * Clone the Repository
